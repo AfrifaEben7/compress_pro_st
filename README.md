@@ -4,7 +4,6 @@ This project demonstrates basic signal compression and pattern matching using AR
 
 ## Building
 
-Ensure the `aarch64-linux-gnu-gcc` cross compiler is installed. Then run:
 
 ```bash
 make
