@@ -77,9 +77,39 @@ int main(int argc, char **argv)
     if (use_rle) {
         compressed_size = rle_compress(data, data_size, compressed);
         printf("Compression Method: Run-Length Encoding\n");
+        
+        // Save compressed data to file
+        char output_path[256];
+        const char *base_name = strrchr(file, '/');
+        base_name = base_name ? base_name + 1 : file;
+        char *dot = strrchr(base_name, '.');
+        int name_len = dot ? (dot - base_name) : strlen(base_name);
+        snprintf(output_path, sizeof(output_path), 
+                "compressed_output/rle/%.*s_rle.bin", name_len, base_name);
+        
+        FILE *out_file = fopen(output_path, "wb");
+        if (out_file) {
+            fwrite(compressed, sizeof(int32_t), compressed_size, out_file);
+            fclose(out_file);
+        }
     } else if (use_delta) {
         compressed_size = delta_compress(data, data_size, compressed);
         printf("Compression Method: Delta Encoding\n");
+        
+        // Save compressed data to file
+        char output_path[256];
+        const char *base_name = strrchr(file, '/');
+        base_name = base_name ? base_name + 1 : file;
+        char *dot = strrchr(base_name, '.');
+        int name_len = dot ? (dot - base_name) : strlen(base_name);
+        snprintf(output_path, sizeof(output_path), 
+                "compressed_output/delta/%.*s_delta.bin", name_len, base_name);
+        
+        FILE *out_file = fopen(output_path, "wb");
+        if (out_file) {
+            fwrite(compressed, sizeof(int32_t), compressed_size, out_file);
+            fclose(out_file);
+        }
     } else {
         printf("No compression selected.\n");
     }

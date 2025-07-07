@@ -50,18 +50,18 @@ Implement RLE (Run-Length Encoding), Delta compression, and Pattern Search algor
 ## Test Data Provided
 
 ### For RLE Testing:
-- **File**: `data/best_rle_data.csv`
+- **File**: `data/good_rle_data.csv`
 - **Content**: Long runs of identical values
 - **Expected**: ~98% compression ratio
 
 ### For Delta Testing:
-- **File**: `data/best_delta_data.csv` 
+- **File**: `data/good_delta_data.csv` 
 - **Content**: Sequentially increasing values
 - **Expected**: ~50% compression ratio
 
 ### For Search Testing:
 - **File**: Any data file
-- **Usage**: `./sigscan data/best_rle_data.csv -rle -search "100" -stats`
+- **Usage**: `./sigscan data/good_rle_data.csv -rle -search "100" -stats`
 - **Expected**: Reports how many times the value appears
 
 ## Building and Testing
@@ -74,24 +74,24 @@ make
 
 ### Test RLE Compression:
 ```bash
-./sigscan data/best_rle_data.csv -rle -stats
+./sigscan data/good_rle_data.csv -rle -stats
 ```
 
 ### Test Delta Compression:
 ```bash
-./sigscan data/best_delta_data.csv -delta -stats
+./sigscan data/good_delta_data.csv -delta -stats
 ```
 
 ### Test Pattern Search:
 ```bash
-./sigscan data/best_rle_data.csv -rle -search "100" -stats
-./sigscan data/best_delta_data.csv -delta -search "1250" -stats
+./sigscan data/good_rle_data.csv -rle -search "100" -stats
+./sigscan data/good_delta_data.csv -delta -search "1250" -stats
 ```
 
 ### Verify Correctness:
 ```bash
-./verify_compression.sh data/best_rle_data.csv rle
-./verify_compression.sh data/best_delta_data.csv delta
+./verify_compression.sh data/good_rle_data.csv rle
+./verify_compression.sh data/good_delta_data.csv delta
 ```
 
 ## Expected Results
@@ -204,23 +204,23 @@ mov x3, #0          // Initialize counter
 ### Phase 1: Basic Implementation
 ```bash
 make clean && make
-./sigscan data/best_rle_data.csv -rle -stats
+./sigscan data/good_rle_data.csv -rle -stats
 ```
 
 ### Phase 2: Search Function
 ```bash
-./sigscan data/best_rle_data.csv -rle -search "100" -stats
+./sigscan data/good_rle_data.csv -rle -search "100" -stats
 ```
 
 ### Phase 3: Delta Compression
 ```bash
-./sigscan data/best_delta_data.csv -delta -stats
+./sigscan data/good_delta_data.csv -delta -stats
 ```
 
 ### Phase 4: Full Verification
 ```bash
-./verify_compression.sh data/best_rle_data.csv rle
-./verify_compression.sh data/best_delta_data.csv delta
+./verify_compression.sh data/good_rle_data.csv rle
+./verify_compression.sh data/good_delta_data.csv delta
 ```
 
 ## File Structure
@@ -235,8 +235,8 @@ student_assignment/
 ├── include/
 │   └── project.h           # Function declarations (provided)
 ├── data/
-│   ├── best_rle_data.csv   # RLE test data
-│   ├── best_delta_data.csv # Delta test data
+│   ├── good_rle_data.csv   # RLE test data
+│   ├── good_delta_data.csv # Delta test data
 │   └── sample_data.csv     # Additional test data
 ├── Makefile                # Build system (provided)
 └── verify_compression.sh   # Testing script (provided)

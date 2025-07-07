@@ -1,132 +1,79 @@
-.text
-.align 2
-
-// ===============================================
-// STUDENT ASSIGNMENT: COMPRESSION ALGORITHMS
-// ===============================================
-// Implement RLE, Delta compression, and Search algorithms
-// Follow AAPCS64 calling conventions
-// All functions must preserve callee-saved registers (x19-x28)
-
-// ===============================================
-// RLE COMPRESSION
-// ===============================================
-// Input: 
-//   x0 = input array (pointer to int32_t)
-//   x1 = input size (number of elements)
-//   x2 = output array (pointer to int32_t)
-// Output: 
-//   x0 = compressed size (number of elements stored)
+// compression.s - RLE and Delta encoding for ARM64
+// Student Implementation File
 //
-// Algorithm:
-//   1. For consecutive identical values, store as [value, count] pairs
-//   2. Example: [5,5,5,7,7] -> [5,3,7,2] (value=5, count=3, value=7, count=2)
-//   3. Return total number of elements stored in output array
+// INSTRUCTIONS:
+// Replace the C function calls below with your own ARM64 assembly implementations
+// The C versions are provided so you can build and test immediately
+// Your goal is to implement the same functionality in ARM64 assembly
+
+    .text
+    .extern rle_compress_c
+    .extern delta_compress_c
+    .extern pattern_search_c
+    
+    .global rle_compress
+    .type rle_compress, %function
+
+// size_t rle_compress(const int32_t *data, size_t size, int32_t *out)
+// Input: x0 = input array pointer, x1 = input size, x2 = output array pointer
+// Output: x0 = compressed size (number of elements)
 //
-.global rle_compress
+// Algorithm: Store consecutive identical values as [count, value] pairs
+// Example: [100,100,100,75,75] → [3,100,2,75]
+//
+// TODO: Replace this C function call with your ARM64 assembly implementation
 rle_compress:
-    // TODO: Implement RLE compression algorithm
-    // 
-    // HINTS:
-    // - Use x3 for current value, x4 for count, x5 for output index
-    // - Don't forget to store the final value/count pair
-    // - Handle edge cases (empty input, single element)
-    // 
-    // Pseudocode:
-    // output_index = 0
-    // current_value = input[0]
-    // count = 1
-    // for i = 1 to input_size-1:
-    //   if input[i] == current_value:
-    //     count++
-    //   else:
-    //     output[output_index] = current_value
-    //     output[output_index+1] = count
-    //     output_index += 2
-    //     current_value = input[i]
-    //     count = 1
-    // // Don't forget the last pair!
-    // output[output_index] = current_value
-    // output[output_index+1] = count
-    // return output_index + 2
-
-    // YOUR CODE HERE
-    mov x0, #0  // Placeholder - replace with your implementation
+    // TEMPORARY: Call C version - replace with your assembly implementation
+    stp x29, x30, [sp, -16]!
+    mov x29, sp
+    
+    bl rle_compress_c
+    
+    ldp x29, x30, [sp], #16
     ret
 
-// ===============================================
-// DELTA COMPRESSION
-// ===============================================
-// Input:
-//   x0 = input array (pointer to int32_t)
-//   x1 = input size (number of elements)
-//   x2 = output array (pointer to int32_t)
-// Output:
-//   x0 = compressed size (number of elements stored)
+    .global delta_compress
+    .type delta_compress, %function
+
+// size_t delta_compress(const int32_t *data, size_t size, int32_t *out)
+// Input: x0 = input array pointer, x1 = input size, x2 = output array pointer
+// Output: x0 = compressed size (number of elements)
 //
-// Algorithm:
-//   1. Store first value as 32-bit integer
-//   2. For remaining values, store difference from previous value
-//   3. Pack two 16-bit deltas into one 32-bit word when possible
-//   4. Return total number of 32-bit words used
+// Algorithm: Store first value, then differences between consecutive values
+// Example: [1000,1001,1002,1003] → [1000,1,1,1]
 //
-.global delta_compress
+// TODO: Replace this C function call with your ARM64 assembly implementation
 delta_compress:
-    // TODO: Implement Delta compression algorithm
-    //
-    // HINTS:
-    // - First element: output[0] = input[0]
-    // - For i >= 1: delta = input[i] - input[i-1]
-    // - Pack deltas as 16-bit values: output[j] = (delta2 << 16) | delta1
-    // - Handle cases where delta doesn't fit in 16 bits
-    //
-    // Pseudocode:
-    // output[0] = input[0]
-    // output_index = 1
-    // for i = 1 to input_size-1:
-    //   delta = input[i] - input[i-1]
-    //   if delta fits in 16 bits:
-    //     store as 16-bit value (pack 2 per 32-bit word)
-    //   else:
-    //     store as 32-bit value
-    // return output_index
-
-    // YOUR CODE HERE
-    mov x0, #0  // Placeholder - replace with your implementation
+    // TEMPORARY: Call C version - replace with your assembly implementation
+    stp x29, x30, [sp, -16]!
+    mov x29, sp
+    
+    bl delta_compress_c
+    
+    ldp x29, x30, [sp], #16
     ret
 
-// ===============================================
-// PATTERN SEARCH
-// ===============================================
-// Input:
-//   x0 = input array (pointer to int32_t)
-//   x1 = input size (number of elements)
-//   x2 = search value (int32_t)
-// Output:
-//   x0 = number of matches found
-//
-// Algorithm:
-//   1. Iterate through the array
-//   2. Count how many elements match the search value
-//   3. Return the total count
-//
-.global search_pattern
-search_pattern:
-    // TODO: Implement pattern search algorithm
-    //
-    // HINTS:
-    // - Use a loop to iterate through the array
-    // - Compare each element with the search value
-    // - Keep a counter for matches
-    // - Use proper register preservation
-    //
-    // Pseudocode:
-    // match_count = 0
-    // for i = 0 to input_size-1:
-    //   if input[i] == search_value:
-    //     match_count++
-    // return match_count
+    .global pattern_search
+    .type pattern_search, %function
 
-    // YOUR CODE HERE
-    mov x0, #0  // Placeholder - replace with your implementation
+// size_t pattern_search(const int32_t *data, size_t size,
+//                      const int32_t *pattern, size_t pattern_size,
+//                      size_t *results, size_t max_results)
+// Input: x0 = data array, x1 = data size, x2 = pattern array, x3 = pattern size
+//        x4 = results array, x5 = max results
+// Output: x0 = number of matches found
+//
+// Algorithm: Find all occurrences of pattern in data
+// For single value search, count how many elements match the pattern value
+//
+// TODO: Replace this C function call with your ARM64 assembly implementation
+pattern_search:
+    // TEMPORARY: Call C version - replace with your assembly implementation
+    stp x29, x30, [sp, -16]!
+    mov x29, sp
+    
+    // Parameters are already set up correctly for C function
+    bl pattern_search_c
+    
+    ldp x29, x30, [sp], #16
     ret
