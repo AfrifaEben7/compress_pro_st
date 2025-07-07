@@ -1,0 +1,32 @@
+# Compiled binaries
+sigscan
+decompress
+
+# Object files
+*.o
+src/*.o
+
+# Compressed output files
+compressed_output/rle/*
+compressed_output/delta/*
+compressed_output/reports/*
+
+# Test output files
+test_output.txt
+test_*.csv
+decompressed_*.csv
+final_test_decomp.csv
+
+# IDE files
+.vscode/
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Backup files
+*~
+*.bak
+*.swp
+*.tmp
