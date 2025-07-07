@@ -1,4 +1,4 @@
-# Signal Compression Engine
+# Signal Compression
 
 This project demonstrates basic signal compression and pattern matching using ARM64 assembly. It includes a simple command line interface written in C that interacts with ARM64 assembly routines for compression, searching, utilities, and memory management.
 
