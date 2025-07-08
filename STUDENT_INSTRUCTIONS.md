@@ -260,4 +260,4 @@ student_assignment/
 4. **Incorrect addressing**: Use proper scale factors for memory access
 5. **Not handling edge cases**: Empty arrays, single elements, etc.
 
-Good luck with your implementation! 🚀
+Good luck with your implementation
