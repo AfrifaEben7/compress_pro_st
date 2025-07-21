@@ -267,9 +267,10 @@ Good luck with your implementation
 make clean && make CFLAGS="-g -O0"
 
 # Debug assembly functions
-gdb ./sigscan
+```gdb ./sigscan
 (gdb) break rle_compress
 (gdb) run data/good_rle_data.csv -rle
 (gdb) stepi                    # Step by instruction
 (gdb) info registers           # Check register values
 (gdb) x/10w $x2               # Examine output memory
+```
