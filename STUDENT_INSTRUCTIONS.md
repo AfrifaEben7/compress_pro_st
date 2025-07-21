@@ -261,3 +261,15 @@ student_assignment/
 5. **Not handling edge cases**: Empty arrays, single elements, etc.
 
 Good luck with your implementation
+
+
+# Compile with debug info
+make clean && make CFLAGS="-g -O0"
+
+# Debug assembly functions
+gdb ./sigscan
+(gdb) break rle_compress
+(gdb) run data/good_rle_data.csv -rle
+(gdb) stepi                    # Step by instruction
+(gdb) info registers           # Check register values
+(gdb) x/10w $x2               # Examine output memory
