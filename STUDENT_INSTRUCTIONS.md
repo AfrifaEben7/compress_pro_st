@@ -229,7 +229,7 @@ student_assignment/
 ├── src/
 │   ├── main.c              # Main program (provided)
 │   ├── compression.s       # YOUR IMPLEMENTATION HERE
-│   ├── search.s            # Empty (compatibility)
+│   ├── compression.c       
 │   ├── utils.s             # Utility functions (provided)
 │   └── memory.s            # Memory management (provided)
 ├── include/
