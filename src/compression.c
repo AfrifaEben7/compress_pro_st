@@ -13,18 +13,18 @@ size_t rle_compress_c(const int32_t *data, size_t size, int32_t *out) {
         if (data[i] == current_value) {
             count++;
         } else {
-            // Store [count, value] pair
-            out[out_index++] = count;
+            // Store [value, count] pair (fixed order)
             out[out_index++] = current_value;
+            out[out_index++] = count;
             
             current_value = data[i];
             count = 1;
         }
     }
     
-    // Store final [count, value] pair
-    out[out_index++] = count;
+    // Store final [value, count] pair
     out[out_index++] = current_value;
+    out[out_index++] = count;
     
     return out_index;
 }
@@ -33,15 +33,36 @@ size_t rle_compress_c(const int32_t *data, size_t size, int32_t *out) {
 size_t delta_compress_c(const int32_t *data, size_t size, int32_t *out) {
     if (size == 0) return 0;
     
-    // Store first value as-is
+    // Store first value as 32-bit
     out[0] = data[0];
+    size_t bytes_written = 4;
     
-    // Store deltas
+    // Cast output to byte pointer for 16-bit delta storage
+    int8_t *byte_out = (int8_t*)out;
+    int8_t *delta_start = byte_out + 4;  // Start after first 32-bit value
+    
+    // Store deltas as 16-bit values
     for (size_t i = 1; i < size; i++) {
-        out[i] = data[i] - data[i-1];
+        int32_t delta = data[i] - data[i-1];
+        
+        // Check if delta fits in 16-bit range
+        if (delta >= -32768 && delta <= 32767) {
+            // Store as 16-bit delta
+            int16_t delta16 = (int16_t)delta;
+            *((int16_t*)(delta_start + (i-1)*2)) = delta16;
+            bytes_written += 2;
+        } else {
+            // Delta too large, fallback to original data
+            for (size_t j = 0; j < size; j++) {
+                out[j] = data[j];
+            }
+            return size;  // Return original size in words
+        }
     }
     
-    return size;
+    // Round up to word boundary and return word count
+    size_t word_count = (bytes_written + 3) / 4;
+    return word_count;
 }
 
 // C implementation of pattern search 
