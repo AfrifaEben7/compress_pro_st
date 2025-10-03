@@ -12,7 +12,7 @@ make
 ## Usage Example
 
 ```bash
-./sigscan data/sample_data.csv -rle -search "100 75" -stats
+./sigscan data/sample_data.csv -rle -search "100" -stats
 ```
 
 ## Compression Algorithms
