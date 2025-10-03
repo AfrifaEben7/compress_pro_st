@@ -140,7 +140,6 @@ int main(int argc, char **argv)
         }
     }
 
-    // ASCII chart removed - not necessary for basic stats
 
     free_buffer(data);
     free_buffer(compressed);
