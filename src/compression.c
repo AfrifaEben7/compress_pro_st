@@ -13,7 +13,7 @@ size_t rle_compress_c(const int32_t *data, size_t size, int32_t *out) {
         if (data[i] == current_value) {
             count++;
         } else {
-            // Store [value, count] pair (fixed order)
+            // Store [value, count] pair
             out[out_index++] = current_value;
             out[out_index++] = count;
             
@@ -52,7 +52,7 @@ size_t delta_compress_c(const int32_t *data, size_t size, int32_t *out) {
             *((int16_t*)(delta_start + (i-1)*2)) = delta16;
             bytes_written += 2;
         } else {
-            // Delta too large, fallback to original data
+    
             for (size_t j = 0; j < size; j++) {
                 out[j] = data[j];
             }
