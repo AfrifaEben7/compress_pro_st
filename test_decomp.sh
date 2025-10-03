@@ -37,20 +37,20 @@ if [ -f "data/best_rle_data.csv" ]; then
         if [ -f "$TEST_DIR/rle_decompressed.csv" ]; then
             echo "3. Comparing files..."
             if cmp -s data/best_rle_data.csv "$TEST_DIR/rle_decompressed.csv"; then
-                echo "✓ RLE decompression test PASSED"
+                echo "RLE decompression test PASSED"
             else
-                echo "✗ RLE decompression test FAILED - files don't match"
+                echo "RLE decompression test FAILED - files don't match"
                 echo "First few differences:"
                 diff data/best_rle_data.csv "$TEST_DIR/rle_decompressed.csv" | head -10
             fi
         else
-            echo "✗ RLE decompression test FAILED - decompressed file not created"
+            echo "RLE decompression test FAILED - decompressed file not created"
         fi
     else
-        echo "✗ RLE compression failed - compressed file not found"
+        echo "RLE compression failed - compressed file not found"
     fi
 else
-    echo "⚠ Skipping RLE test - data/best_rle_data.csv not found"
+    echo "Skipping RLE test - data/best_rle_data.csv not found"
 fi
 
 echo ""
@@ -68,20 +68,20 @@ if [ -f "data/best_delta_data.csv" ]; then
         if [ -f "$TEST_DIR/delta_decompressed.csv" ]; then
             echo "3. Comparing files..."
             if cmp -s data/best_delta_data.csv "$TEST_DIR/delta_decompressed.csv"; then
-                echo "✓ Delta decompression test PASSED"
+                echo "Delta decompression test PASSED"
             else
-                echo "✗ Delta decompression test FAILED - files don't match"
+                echo "Delta decompression test FAILED - files don't match"
                 echo "First few differences:"
                 diff data/best_delta_data.csv "$TEST_DIR/delta_decompressed.csv" | head -10
             fi
         else
-            echo "✗ Delta decompression test FAILED - decompressed file not created"
+            echo "Delta decompression test FAILED - decompressed file not created"
         fi
     else
-        echo "✗ Delta compression failed - compressed file not found"
+        echo "Delta compression failed - compressed file not found"
     fi
 else
-    echo "⚠ Skipping Delta test - data/best_delta_data.csv not found"
+    echo "Skipping Delta test - data/best_delta_data.csv not found"
 fi
 
 echo ""
@@ -96,9 +96,9 @@ if [ -f "data/sample_data.csv" ]; then
         ./decompress compressed_output/rle/sample_data_rle.bin "$TEST_DIR/sample_rle_decompressed.csv" rle
         
         if cmp -s data/sample_data.csv "$TEST_DIR/sample_rle_decompressed.csv"; then
-            echo "✓ Sample RLE test PASSED"
+            echo "Sample RLE test PASSED"
         else
-            echo "✗ Sample RLE test FAILED"
+            echo "Sample RLE test FAILED"
         fi
     fi
     
@@ -109,13 +109,13 @@ if [ -f "data/sample_data.csv" ]; then
         ./decompress compressed_output/delta/sample_data_delta.bin "$TEST_DIR/sample_delta_decompressed.csv" delta
         
         if cmp -s data/sample_data.csv "$TEST_DIR/sample_delta_decompressed.csv"; then
-            echo "✓ Sample Delta test PASSED"
+            echo "Sample Delta test PASSED"
         else
-            echo "✗ Sample Delta test FAILED"
+            echo "Sample Delta test FAILED"
         fi
     fi
 else
-    echo "⚠ Skipping sample data test - data/sample_data.csv not found"
+    echo "Skipping sample data test - data/sample_data.csv not found"
 fi
 
 echo ""
