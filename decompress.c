@@ -65,7 +65,7 @@ int decompress_rle(const char* input_file, const char* output_file) {
     fprintf(output, "timestamp,signal_value\n");
 
     // Read RLE compressed data
-    // Format: [value][count][value][count], (fixed format)
+    // Format: [value][count][value][count]
     uint32_t count, value;
     int timestamp = 0;
 
@@ -110,8 +110,6 @@ int decompress_delta(const char* input_file, const char* output_file) {
     // Write CSV header to match original format
     fprintf(output, "timestamp,signal_value\n");
 
-    // Read Delta compressed data
-    // Format: [first_value(32-bit)][delta1(16-bit)][delta2(16-bit)]...
     int32_t first_value;
     int16_t delta;
     
